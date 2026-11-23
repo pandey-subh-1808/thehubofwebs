@@ -1,523 +1,392 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pandey-subh-1808 — Code Hub</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      min-height: 100vh;
-      color: #1e1b4b;
-      background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 50%, #ecfdf5 100%);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Subh Pandey — Project Hub</title>
+<style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --ink:#14172b; --muted:#5d6480; --line:#e3e6f0;
+  --brand:#4f46e5; --brand-ink:#ffffff; --brand-soft:#eceafd; --danger:#c62f4b;
+  --code-bg:#0f1226; --code-ink:#dfe3f5; --shadow:0 1px 2px rgba(20,23,43,.06),0 8px 24px -12px rgba(20,23,43,.18);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0d0f1c;--surface:#161930;--ink:#eceefb;--muted:#9aa1c4;--line:#262a48;
+    --brand:#8b84ff;--brand-ink:#0d0f1c;--brand-soft:#23265a;--danger:#ff7a93;--code-bg:#0a0c18;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6)}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 
-    .clean-card {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(226, 232, 240, 0.95);
-      box-shadow: 0 6px 20px -8px rgba(79, 70, 229, 0.12);
-    }
+/* Top bar */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px}
+.id{display:flex;align-items:center;gap:10px;min-width:0}
+.avatar{width:34px;height:34px;border-radius:10px;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.id b{display:block;font-size:15px;line-height:1.2}
+.id span{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);padding:7px 13px;border-radius:9px;cursor:pointer;font-weight:550;font-size:13.5px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.danger:hover{border-color:var(--danger);color:var(--danger)}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--muted)}
+.btn.ghost:hover{background:var(--brand-soft);color:var(--ink)}
 
-    .btn-violet {
-      background: #6d4aff;
-      color: #ffffff;
-    }
+/* Intro */
+.intro{padding:44px 0 26px}
+.intro h1{margin:0 0 8px;font-size:clamp(28px,4.4vw,40px);line-height:1.1;letter-spacing:-.02em}
+.intro p{margin:0;max-width:56ch;color:var(--muted);font-size:16px}
+.stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stats div{font-size:13px;color:var(--muted)}
+.stats strong{display:block;font-size:22px;color:var(--ink);letter-spacing:-.01em}
 
-    .btn-violet:hover {
-      background: #5b38eb;
-    }
+/* Toolbar */
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
+.bar input,.bar select{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 13px;font-size:14px}
+.bar input{flex:1;min-width:200px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;font-size:13px;cursor:pointer;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
 
-    pre.code-box {
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 1rem;
-      border-radius: 0.75rem;
-      overflow: auto;
-      max-height: 380px;
-      font-size: 0.82rem;
-      line-height: 1.5;
-      white-space: pre;
-      margin: 0;
-    }
-  </style>
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding-bottom:60px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
+.card.pinned{border-color:var(--brand)}
+.card h2{margin:0;font-size:16.5px;letter-spacing:-.01em;overflow-wrap:anywhere}
+.card .head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.tag{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--brand-soft);color:var(--brand);flex:none}
+.card p{margin:0;color:var(--muted);font-size:14px;flex:1}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row .spacer{flex:1}
+.link{font-size:13px;color:var(--muted);text-decoration:none}
+.link:hover{color:var(--brand);text-decoration:underline}
+.empty{display:none;text-align:center;padding:60px 20px;color:var(--muted);border:1px dashed var(--line);border-radius:14px;margin-bottom:60px}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px}
+
+/* Modals */
+.modal{position:fixed;inset:0;background:rgba(10,12,28,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.open{display:flex}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:16px;width:100%;max-width:720px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px -20px rgba(0,0,0,.5)}
+.sheet header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.sheet header h3{margin:0;font-size:16px}
+.sheet header small{color:var(--muted)}
+.sheet .body{padding:18px;overflow:auto}
+pre.code{margin:0;background:var(--code-bg);color:var(--code-ink);padding:16px;border-radius:12px;overflow:auto;max-height:55vh;font:12.5px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}
+form .f{margin-bottom:12px}
+form label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px}
+form input[type=text],form input[type=url],form select,form textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:14px}
+form textarea{font:12.5px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:170px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.two{grid-template-columns:1fr}.actions .btn{padding:6px 10px}.id span{display:none}}
+.pin{display:flex;align-items:center;gap:8px;font-size:13.5px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:10px;font-size:13.5px;opacity:0;pointer-events:none;transition:.2s;z-index:80}
+.toast.show{opacity:1;transform:translateX(-50%)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
-<body class="antialiased">
-  <div class="max-w-5xl mx-auto px-4 py-7 space-y-6">
-    <!-- Header -->
-    <header class="clean-card rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
-      <div>
-        <div class="flex items-center gap-2.5">
-          <span class="w-9 h-9 rounded-xl btn-violet font-bold text-sm flex items-center justify-center">SP</span>
-          <div>
-            <h1 class="text-lg font-bold text-slate-900 leading-tight">Subh Pandey</h1>
-            <a href="https://github.com/pandey-subh-1808" target="_blank" rel="noopener noreferrer" class="text-xs font-medium text-[#6d4aff] hover:underline">
-              github.com/pandey-subh-1808
-            </a>
-          </div>
-        </div>
-      </div>
+<body>
 
-      <div class="flex flex-wrap items-center gap-2">
-        <button type="button" onclick="openEditor()" class="px-3.5 py-2 rounded-xl btn-violet text-xs sm:text-sm font-semibold transition">
-          + Add Project
-        </button>
-        <button type="button" onclick="exportJSON()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-medium transition">
-          Export
-        </button>
-        <label class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-medium cursor-pointer transition">
-          Import
-          <input type="file" accept=".json" onchange="importJSON(event)" class="hidden" />
-        </label>
-        <button type="button" onclick="resetDefaults()" class="px-3 py-2 rounded-xl bg-white hover:bg-rose-50 border border-slate-200 text-slate-600 hover:text-rose-600 text-xs sm:text-sm font-medium transition">
-          Reset
-        </button>
+<div class="top">
+  <div class="wrap">
+    <div class="id">
+      <div class="avatar">SP</div>
+      <div><b>Subh Pandey</b><span>@pandey-subh-1808</span></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" data-act="add">Add project</button>
+      <button class="btn" data-act="export">Export</button>
+      <label class="btn" style="margin:0">Import<input type="file" id="importFile" accept=".json" hidden></label>
+      <button class="btn danger" data-act="reset">Reset</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="intro">
+    <h1>Projects and code, in one place.</h1>
+    <p>Games, tools and experiments I’ve built. Open a live demo, read the source, or jump to the repository.</p>
+    <div class="stats">
+      <div><strong id="sTotal">0</strong>Projects</div>
+      <div><strong id="sLive">0</strong>Live demos</div>
+      <div><strong id="sLang">0</strong>Languages</div>
+    </div>
+  </section>
+
+  <div class="bar">
+    <input id="q" type="search" placeholder="Search projects" aria-label="Search projects" />
+    <div class="chips" id="chips" role="group" aria-label="Filter by language"></div>
+  </div>
+
+  <section class="grid" id="grid"></section>
+  <div class="empty" id="empty">No projects match. Clear the search or add a new project.</div>
+</main>
+
+<footer><div class="wrap">Your projects are saved in this browser. Use Export to back them up.</div></footer>
+
+<!-- Viewer -->
+<div class="modal" id="viewer" role="dialog" aria-modal="true" aria-labelledby="vTitle">
+  <div class="sheet">
+    <header>
+      <div><h3 id="vTitle"></h3><small id="vSub"></small></div>
+      <div class="row">
+        <button class="btn sm" data-act="copy">Copy code</button>
+        <button class="btn sm ghost" data-act="closeViewer" aria-label="Close">Close</button>
       </div>
     </header>
-
-    <!-- Quick HTML Launch Bar -->
-    <section class="clean-card rounded-2xl p-4">
-      <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">Live HTML Pages</p>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <a href="https://pandey-subh-1808.github.io/neon_run/neon_run.html" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-white border border-slate-200/80 hover:border-[#6d4aff] flex items-center justify-between transition">
-          <div>
-            <div class="text-sm font-semibold text-slate-900">Neon Run</div>
-            <div class="text-xs text-slate-500">neon_run.html</div>
-          </div>
-          <span class="text-xs font-semibold text-[#6d4aff]">Open ↗</span>
-        </a>
-
-        <a href="https://pandey-subh-1808.github.io/cgpacalculator/grades.html" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-white border border-slate-200/80 hover:border-[#6d4aff] flex items-center justify-between transition">
-          <div>
-            <div class="text-sm font-semibold text-slate-900">Grades & CGPA</div>
-            <div class="text-xs text-slate-500">grades.html</div>
-          </div>
-          <span class="text-xs font-semibold text-[#6d4aff]">Open ↗</span>
-        </a>
-
-        <a href="https://pandey-subh-1808.github.io/expenses/expenses.html" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-white border border-slate-200/80 hover:border-[#6d4aff] flex items-center justify-between transition">
-          <div>
-            <div class="text-sm font-semibold text-slate-900">Expenses</div>
-            <div class="text-xs text-slate-500">expenses.html</div>
-          </div>
-          <span class="text-xs font-semibold text-[#6d4aff]">Open ↗</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Search & Filter -->
-    <section class="flex flex-col sm:flex-row gap-3">
-      <input
-        id="searchInput"
-        type="text"
-        oninput="renderGrid()"
-        placeholder="Search projects..."
-        class="flex-1 clean-card rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40"
-      />
-      <select
-        id="langFilter"
-        onchange="renderGrid()"
-        class="clean-card rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40"
-      >
-        <option value="ALL">All Languages</option>
-        <option value="HTML">HTML</option>
-        <option value="Python">Python</option>
-        <option value="JavaScript">JavaScript</option>
-      </select>
-    </section>
-
-    <!-- Projects Grid -->
-    <section id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></section>
-
-    <div id="emptyMsg" class="hidden clean-card rounded-2xl p-10 text-center text-sm text-slate-500">
-      No projects match your filter.
-    </div>
+    <div class="body"><pre class="code" id="vCode"></pre></div>
   </div>
+</div>
 
-  <!-- Code Viewer Modal -->
-  <div id="viewerModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-[2px] hidden items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl border border-slate-200 w-full max-w-3xl max-h-[88vh] flex flex-col overflow-hidden shadow-xl">
-      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between gap-3">
-        <div>
-          <h2 id="vTitle" class="font-bold text-base text-slate-900"></h2>
-          <p id="vSub" class="text-xs text-slate-500"></p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="copyCode()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-medium text-slate-800">
-            Copy
-          </button>
-          <button type="button" onclick="closeViewer()" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700">
-            ✕
-          </button>
-        </div>
+<!-- Editor -->
+<div class="modal" id="editor" role="dialog" aria-modal="true" aria-labelledby="eTitle">
+  <div class="sheet">
+    <header>
+      <h3 id="eTitle">Add project</h3>
+      <button class="btn sm ghost" data-act="closeEditor" aria-label="Close">Close</button>
+    </header>
+    <form class="body" id="form">
+      <input type="hidden" id="eId">
+      <div class="two">
+        <div class="f"><label for="eName">Name</label><input id="eName" type="text" required placeholder="my-project"></div>
+        <div class="f"><label for="eLang">Language</label>
+          <select id="eLang"><option>HTML</option><option>JavaScript</option><option>Python</option><option>Other</option></select></div>
       </div>
-      <div class="p-5 overflow-y-auto">
-        <pre id="vCode" class="code-box"></pre>
+      <div class="f"><label for="eDesc">Description</label><input id="eDesc" type="text" required placeholder="What does it do?"></div>
+      <div class="two">
+        <div class="f"><label for="eRepo">Repository URL</label><input id="eRepo" type="url" placeholder="https://github.com/..."></div>
+        <div class="f"><label for="eDemo">Live demo URL</label><input id="eDemo" type="url" placeholder="https://...github.io/..."></div>
       </div>
-    </div>
+      <div class="f">
+        <label for="eCode">Code <span style="font-weight:400;color:var(--muted)">— paste it, or</span>
+          <label style="display:inline;color:var(--brand);cursor:pointer;font-weight:600">choose a file<input type="file" id="eFile" hidden></label></label>
+        <textarea id="eCode" required placeholder="Paste code here"></textarea>
+      </div>
+      <div class="f pin"><input type="checkbox" id="ePin"><label for="ePin" style="margin:0;font-weight:500">Pin to top</label></div>
+      <div class="row"><span class="spacer"></span>
+        <button type="button" class="btn" data-act="closeEditor">Cancel</button>
+        <button type="submit" class="btn primary">Save project</button>
+      </div>
+    </form>
   </div>
+</div>
 
-  <!-- Add / Edit Modal -->
-  <div id="editorModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-[2px] hidden items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl border border-slate-200 w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden shadow-xl">
-      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-        <h2 id="eTitle" class="font-bold text-base text-slate-900">Add Project</h2>
-        <button type="button" onclick="closeEditor()" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700">
-          ✕
-        </button>
-      </div>
-      <form onsubmit="handleSave(event)" class="p-5 space-y-3.5 overflow-y-auto">
-        <input type="hidden" id="eId" />
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Project Name *</label>
-            <input id="eName" type="text" required placeholder="my-new-project" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Language *</label>
-            <select id="eLang" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm">
-              <option value="HTML">HTML</option>
-              <option value="Python">Python</option>
-              <option value="JavaScript">JavaScript</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Description *</label>
-          <input id="eDesc" type="text" required placeholder="Short summary of the project" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">GitHub Repo URL</label>
-            <input id="eRepo" type="url" placeholder="https://github.com/pandey-subh-1808/..." class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Live HTML URL</label>
-            <input id="eHtml" type="url" placeholder="https://pandey-subh-1808.github.io/..." class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="text-xs font-semibold text-slate-700">Code *</label>
-            <label class="text-xs font-semibold text-[#6d4aff] hover:underline cursor-pointer">
-              Pick local file
-              <input type="file" onchange="readLocalFile(event)" class="hidden" />
-            </label>
-          </div>
-          <textarea id="eCode" rows="8" required placeholder="Paste code here..." class="w-full font-mono text-xs bg-slate-900 text-slate-100 rounded-xl p-3"></textarea>
-        </div>
-        <div class="flex justify-end gap-2 pt-1">
-          <button type="button" onclick="closeEditor()" class="px-4 py-2 rounded-xl bg-slate-100 text-xs font-semibold text-slate-700">Cancel</button>
-          <button type="submit" class="px-4 py-2 rounded-xl btn-violet text-xs font-semibold">Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
+<div class="toast" id="toast" role="status"></div>
 
-  <script>
-    const STORAGE_KEY = 'subh_clean_hub_v1';
+<script>
+(function () {
+  'use strict';
+  var KEY = 'subh_project_hub_v2';
 
-    const STARTER_PROJECTS = [
-      {
-        id: 'neon-run',
-        name: 'neon_run',
-        language: 'HTML',
-        description: 'Canvas runner game with jumping and score tracking.',
-        repoUrl: 'https://github.com/pandey-subh-1808/neon_run',
-        htmlUrl: 'https://pandey-subh-1808.github.io/neon_run/neon_run.html',
-        code: '<!DOCTYPE html>\n<html>\n<head><title>Neon Run</title></head>\n<body>\n  <h1>Neon Run</h1>\n  <p>Hosted at https://pandey-subh-1808.github.io/neon_run/neon_run.html</p>\n</body>\n</html>'
-      },
-      {
-        id: 'cgpacalculator',
-        name: 'cgpacalculator',
-        language: 'HTML',
-        description: 'Grades and CGPA calculator (grades.html).',
-        repoUrl: 'https://github.com/pandey-subh-1808/cgpacalculator',
-        htmlUrl: 'https://pandey-subh-1808.github.io/cgpacalculator/grades.html',
-        code: '<!DOCTYPE html>\n<html>\n<head><title>Grades & CGPA</title></head>\n<body>\n  <h1>Grades & CGPA Calculator</h1>\n  <p>Hosted at https://pandey-subh-1808.github.io/cgpacalculator/grades.html</p>\n</body>\n</html>'
-      },
-      {
-        id: 'expenses',
-        name: 'expenses',
-        language: 'HTML',
-        description: 'Daily expense tracker (expenses.html).',
-        repoUrl: 'https://github.com/pandey-subh-1808/expenses',
-        htmlUrl: 'https://pandey-subh-1808.github.io/expenses/expenses.html',
-        code: '<!DOCTYPE html>\n<html>\n<head><title>Expenses</title></head>\n<body>\n  <h1>Expenses Tracker</h1>\n  <p>Hosted at https://pandey-subh-1808.github.io/expenses/expenses.html</p>\n</body>\n</html>'
-      },
-      {
-        id: 'snake-server',
-        name: 'snake-server',
-        language: 'JavaScript',
-        description: 'WebSocket server for multiplayer Snake rooms.',
-        repoUrl: 'https://github.com/pandey-subh-1808/snake-server',
-        htmlUrl: '',
-        code: "const WebSocket = require('ws');\nconst wss = new WebSocket.Server({ port: 8080 });\nwss.on('connection', (ws) => {\n  ws.on('message', (msg) => ws.send(msg.toString()));\n});"
-      },
-      {
-        id: 'ultimate-game-arcade',
-        name: 'ultimate-game-arcade',
-        language: 'HTML',
-        description: 'Browser game hub for mini-games.',
-        repoUrl: 'https://github.com/pandey-subh-1808/ultimate-game-arcade',
-        htmlUrl: 'https://pandey-subh-1808.github.io/ultimate-game-arcade/',
-        code: '<!DOCTYPE html>\n<html>\n<head><title>Arcade</title></head>\n<body><h1>Ultimate Game Arcade</h1></body>\n</html>'
-      },
-      {
-        id: 'taskflow-py',
-        name: 'taskflow.py',
-        language: 'Python',
-        description: 'Python task and workflow helper.',
-        repoUrl: 'https://github.com/pandey-subh-1808/taskflow.py',
-        htmlUrl: '',
-        code: 'tasks = []\n\ndef add_task(name):\n    tasks.append({"name": name, "done": False})\n    return tasks\n\nprint(add_task("Build clean code hub"))'
+  // NOTE: code samples are stored as plain strings. Never put a closing script tag
+  // inside them unescaped (write it as "<\/script>") or the browser will end this script early.
+  var STARTER = [
+    { id:'neon-run', name:'neon_run', language:'HTML', pinned:true,
+      description:'Canvas runner game with jumping and score tracking.',
+      repoUrl:'https://github.com/pandey-subh-1808/neon_run',
+      demoUrl:'https://pandey-subh-1808.github.io/neon_run/neon_run.html',
+      code:'<!DOCTYPE html>\n<html>\n<head><title>Neon Run</title></head>\n<body>\n  <canvas id="game"></canvas>\n</body>\n</html>' },
+    { id:'cgpacalculator', name:'cgpacalculator', language:'HTML', pinned:true,
+      description:'Grades and CGPA calculator.',
+      repoUrl:'https://github.com/pandey-subh-1808/cgpacalculator',
+      demoUrl:'https://pandey-subh-1808.github.io/cgpacalculator/grades.html',
+      code:'<!DOCTYPE html>\n<html>\n<head><title>Grades & CGPA</title></head>\n<body>\n  <h1>Grades & CGPA Calculator</h1>\n</body>\n</html>' },
+    { id:'expenses', name:'expenses', language:'HTML', pinned:true,
+      description:'Daily expense tracker.',
+      repoUrl:'https://github.com/pandey-subh-1808/expenses',
+      demoUrl:'https://pandey-subh-1808.github.io/expenses/expenses.html',
+      code:'<!DOCTYPE html>\n<html>\n<head><title>Expenses</title></head>\n<body>\n  <h1>Expense Tracker</h1>\n</body>\n</html>' },
+    { id:'snake-server', name:'snake-server', language:'JavaScript', pinned:false,
+      description:'Real-time WebSocket server for multiplayer Snake rooms and state sync.',
+      repoUrl:'https://github.com/pandey-subh-1808/snake-server', demoUrl:'',
+      code:"const WebSocket = require('ws');\nconst wss = new WebSocket.Server({ port: 8080 });\nconst rooms = new Map();\n\nwss.on('connection', (socket) => {\n  socket.on('message', (raw) => {\n    try {\n      const data = JSON.parse(raw.toString());\n      if (data.type === 'join' && data.room) {\n        if (!rooms.has(data.room)) rooms.set(data.room, new Set());\n        rooms.get(data.room).add(socket);\n        socket.room = data.room;\n      } else if (socket.room && rooms.has(socket.room)) {\n        for (const client of rooms.get(socket.room)) {\n          if (client !== socket && client.readyState === WebSocket.OPEN) {\n            client.send(JSON.stringify(data));\n          }\n        }\n      }\n    } catch (err) {\n      console.error('Invalid message:', err);\n    }\n  });\n  socket.on('close', () => {\n    if (socket.room && rooms.has(socket.room)) rooms.get(socket.room).delete(socket);\n  });\n});\nconsole.log('Snake server running on ws://localhost:8080');" },
+    { id:'ultimate-game-arcade', name:'ultimate-game-arcade', language:'HTML', pinned:false,
+      description:'Browser game launcher hosting interactive mini-games and scoreboards.',
+      repoUrl:'https://github.com/pandey-subh-1808/ultimate-game-arcade',
+      demoUrl:'https://pandey-subh-1808.github.io/ultimate-game-arcade/',
+      code:'<!DOCTYPE html>\n<html>\n<head><title>Arcade</title></head>\n<body><h1>Ultimate Game Arcade</h1></body>\n</html>' },
+    { id:'taskflow-py', name:'taskflow.py', language:'Python', pinned:false,
+      description:'Python task and workflow helper.',
+      repoUrl:'https://github.com/pandey-subh-1808/taskflow.py', demoUrl:'',
+      code:'tasks = []\n\ndef add_task(name):\n    tasks.append({"name": name, "done": False})\n    return tasks\n\nprint(add_task("Write the first task"))' }
+  ];
+
+  var items = [], lang = 'ALL', viewCode = '';
+  var $ = function (id) { return document.getElementById(id); };
+
+  function clone(x) { return JSON.parse(JSON.stringify(x)); }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) { var p = JSON.parse(raw); if (Array.isArray(p) && p.length) { items = p; return; } }
+    } catch (e) {}
+    items = clone(STARTER); save();
+  }
+  function safeUrl(u) { u = String(u || '').trim(); return /^https?:\/\//i.test(u) ? u : ''; }
+  function normalize(p) { // accepts old exports (demoUrl / htmlUrl)
+    return {
+      id: String(p.id || ('p-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6))),
+      name: String(p.name || 'untitled'), language: String(p.language || 'Other'),
+      description: String(p.description || ''), repoUrl: safeUrl(p.repoUrl),
+      demoUrl: safeUrl(p.demoUrl || p.htmlUrl), pinned: !!p.pinned, code: String(p.code || '')
+    };
+  }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function toast(msg) {
+    var t = $('toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove('show'); }, 1800);
+  }
+
+  function renderChips() {
+    var langs = ['ALL'].concat(Array.from(new Set(items.map(function (p) { return p.language; }))).sort());
+    if (langs.indexOf(lang) < 0) lang = 'ALL';
+    var box = $('chips'); box.textContent = '';
+    langs.forEach(function (l) {
+      var b = el('button', 'chip', l === 'ALL' ? 'All' : l);
+      b.type = 'button'; b.dataset.lang = l; b.setAttribute('aria-pressed', String(l === lang));
+      box.appendChild(b);
+    });
+  }
+
+  function render() {
+    renderChips();
+    var q = $('q').value.trim().toLowerCase();
+    var list = items.filter(function (p) {
+      return (lang === 'ALL' || p.language === lang) &&
+        (!q || (p.name + ' ' + p.description + ' ' + p.language).toLowerCase().indexOf(q) > -1);
+    }).sort(function (a, b) { return (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0); });
+
+    $('sTotal').textContent = items.length;
+    $('sLive').textContent = items.filter(function (p) { return p.demoUrl; }).length;
+    $('sLang').textContent = new Set(items.map(function (p) { return p.language; })).size;
+
+    var grid = $('grid'); grid.textContent = '';
+    $('empty').style.display = list.length ? 'none' : 'block';
+
+    list.forEach(function (p) {
+      var c = el('article', 'card' + (p.pinned ? ' pinned' : ''));
+      var head = el('div', 'head');
+      head.appendChild(el('h2', null, p.name));
+      head.appendChild(el('span', 'tag', p.language));
+      c.appendChild(head);
+      c.appendChild(el('p', null, p.description));
+
+      var r1 = el('div', 'row');
+      var v = el('button', 'btn sm', 'View code'); v.dataset.act = 'view'; v.dataset.id = p.id; r1.appendChild(v);
+      if (p.demoUrl) {
+        var a = el('a', 'btn sm primary', 'Live demo'); a.href = p.demoUrl; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.style.textDecoration = 'none'; r1.appendChild(a);
       }
-    ];
-
-    let items = [];
-    let currentViewCode = '';
-
-    function loadItems() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            items = parsed;
-            return;
-          }
-        }
-      } catch (_) {}
-      items = JSON.parse(JSON.stringify(STARTER_PROJECTS));
-      saveItems();
-    }
-
-    function saveItems() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    }
-
-    function resetDefaults() {
-      if (!confirm('Reset to starter projects?')) return;
-      items = JSON.parse(JSON.stringify(STARTER_PROJECTS));
-      saveItems();
-      renderGrid();
-    }
-
-    function escapeText(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    function escapeUrl(url) {
-      const clean = String(url || '').trim();
-      if (!clean) return '';
-      if (clean.startsWith('https://') || clean.startsWith('http://')) {
-        return escapeText(clean);
+      if (p.repoUrl) {
+        var g = el('a', 'link', 'Repository'); g.href = p.repoUrl; g.target = '_blank'; g.rel = 'noopener noreferrer'; r1.appendChild(g);
       }
-      return '';
-    }
-
-    function renderGrid() {
-      const q = document.getElementById('searchInput').value.trim().toLowerCase();
-      const lang = document.getElementById('langFilter').value;
-
-      const filtered = items.filter((p) => {
-        const matchLang = lang === 'ALL' || p.language === lang;
-        const matchQ = !q ||
-          p.name.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q) ||
-          p.language.toLowerCase().includes(q);
-        return matchLang && matchQ;
+      r1.appendChild(el('span', 'spacer'));
+      [['pin', p.pinned ? 'Unpin' : 'Pin'], ['edit', 'Edit'], ['del', 'Delete']].forEach(function (x) {
+        var b = el('button', 'btn sm ghost', x[1]); b.dataset.act = x[0]; b.dataset.id = p.id; r1.appendChild(b);
       });
+      c.appendChild(r1);
+      grid.appendChild(c);
+    });
+  }
 
-      const grid = document.getElementById('grid');
-      const empty = document.getElementById('emptyMsg');
+  function open(id) { $(id).classList.add('open'); }
+  function close(id) { $(id).classList.remove('open'); }
+  function find(id) { return items.filter(function (p) { return p.id === id; })[0]; }
 
-      if (filtered.length === 0) {
-        grid.innerHTML = '';
-        empty.classList.remove('hidden');
-        return;
+  function openEditor(id) {
+    var p = id ? find(id) : null;
+    $('eTitle').textContent = p ? 'Edit project' : 'Add project';
+    $('eId').value = p ? p.id : '';
+    $('eName').value = p ? p.name : '';
+    $('eLang').value = p ? p.language : 'HTML';
+    $('eDesc').value = p ? p.description : '';
+    $('eRepo').value = p ? p.repoUrl : '';
+    $('eDemo').value = p ? p.demoUrl : '';
+    $('eCode').value = p ? p.code : '';
+    $('ePin').checked = p ? p.pinned : false;
+    open('editor'); $('eName').focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    var chip = e.target.closest('.chip');
+    if (chip) { lang = chip.dataset.lang; render(); return; }
+    var t = e.target.closest('[data-act]');
+    if (t) {
+      var act = t.dataset.act, id = t.dataset.id, p = id ? find(id) : null;
+      if (act === 'add') openEditor();
+      else if (act === 'edit') openEditor(id);
+      else if (act === 'view' && p) {
+        viewCode = p.code; $('vTitle').textContent = p.name;
+        $('vSub').textContent = p.language + ' — ' + p.description;
+        $('vCode').textContent = p.code; open('viewer');
       }
-
-      empty.classList.add('hidden');
-      grid.innerHTML = filtered.map((p) => {
-        const safeHtml = escapeUrl(p.htmlUrl);
-        const safeRepo = escapeUrl(p.repoUrl);
-        return `
-          <article class="clean-card rounded-2xl p-5 flex flex-col justify-between gap-4">
-            <div class="space-y-2">
-              <div class="flex items-center justify-between gap-2">
-                <h2 class="font-bold text-base text-slate-900 truncate">${escapeText(p.name)}</h2>
-                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-50 text-[#6d4aff] shrink-0">
-                  ${escapeText(p.language)}
-                </span>
-              </div>
-              <p class="text-xs sm:text-sm text-slate-600">${escapeText(p.description)}</p>
-              ${safeRepo ? `<a href="${safeRepo}" target="_blank" rel="noopener noreferrer" class="inline-block text-xs font-medium text-slate-500 hover:text-[#6d4aff]">GitHub Repo ↗</a>` : ''}
-            </div>
-
-            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="openViewer('${escapeText(p.id)}')" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-800">
-                  View Code
-                </button>
-                ${safeHtml ? `<a href="${safeHtml}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg btn-violet text-xs font-semibold">Open HTML ↗</a>` : ''}
-              </div>
-              <div class="flex items-center gap-1">
-                <button type="button" onclick="openEditor('${escapeText(p.id)}')" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-100 text-xs text-slate-600">Edit</button>
-                <button type="button" onclick="removeItem('${escapeText(p.id)}')" class="px-2.5 py-1.5 rounded-lg hover:bg-rose-50 text-xs text-rose-600">Del</button>
-              </div>
-            </div>
-          </article>
-        `;
-      }).join('');
-    }
-
-    function openViewer(id) {
-      const p = items.find((x) => x.id === id);
-      if (!p) return;
-      currentViewCode = p.code || '';
-      document.getElementById('vTitle').textContent = p.name;
-      document.getElementById('vSub').textContent = `${p.language} — ${p.description}`;
-      document.getElementById('vCode').textContent = currentViewCode;
-      const modal = document.getElementById('viewerModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function closeViewer() {
-      const modal = document.getElementById('viewerModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function copyCode() {
-      navigator.clipboard.writeText(currentViewCode);
-      alert('Code copied.');
-    }
-
-    function openEditor(id = null) {
-      document.getElementById('eId').value = '';
-      document.getElementById('eName').value = '';
-      document.getElementById('eLang').value = 'HTML';
-      document.getElementById('eDesc').value = '';
-      document.getElementById('eRepo').value = '';
-      document.getElementById('eHtml').value = '';
-      document.getElementById('eCode').value = '';
-
-      if (id) {
-        const p = items.find((x) => x.id === id);
-        if (!p) return;
-        document.getElementById('eTitle').textContent = 'Edit Project';
-        document.getElementById('eId').value = p.id;
-        document.getElementById('eName').value = p.name;
-        document.getElementById('eLang').value = p.language;
-        document.getElementById('eDesc').value = p.description;
-        document.getElementById('eRepo').value = p.repoUrl || '';
-        document.getElementById('eHtml').value = p.htmlUrl || '';
-        document.getElementById('eCode').value = p.code || '';
-      } else {
-        document.getElementById('eTitle').textContent = 'Add Project';
+      else if (act === 'pin' && p) { p.pinned = !p.pinned; save(); render(); }
+      else if (act === 'del' && p) { if (confirm('Delete "' + p.name + '"?')) { items = items.filter(function (x) { return x.id !== id; }); save(); render(); toast('Project deleted'); } }
+      else if (act === 'copy') { (navigator.clipboard ? navigator.clipboard.writeText(viewCode) : Promise.reject()).then(function () { toast('Code copied'); }, function () { toast('Copy failed — select the code manually'); }); }
+      else if (act === 'closeViewer') close('viewer');
+      else if (act === 'closeEditor') close('editor');
+      else if (act === 'export') {
+        var url = URL.createObjectURL(new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' }));
+        var a = document.createElement('a'); a.href = url; a.download = 'pandey-subh-1808-projects.json'; a.click(); URL.revokeObjectURL(url);
       }
-
-      const modal = document.getElementById('editorModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      else if (act === 'reset') { if (confirm('Replace all projects with the starter set?')) { items = clone(STARTER); save(); render(); toast('Reset to starter projects'); } }
+      return;
     }
+    if (e.target.classList.contains('modal')) e.target.classList.remove('open');
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { close('viewer'); close('editor'); } });
+  $('q').addEventListener('input', render);
 
-    function closeEditor() {
-      const modal = document.getElementById('editorModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
+  $('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = $('eId').value;
+    var data = normalize({
+      id: id || undefined, name: $('eName').value.trim(), language: $('eLang').value,
+      description: $('eDesc').value.trim(), repoUrl: $('eRepo').value, demoUrl: $('eDemo').value,
+      pinned: $('ePin').checked, code: $('eCode').value
+    });
+    if (id) { items = items.map(function (p) { return p.id === id ? data : p; }); }
+    else { items.unshift(data); }
+    save(); render(); close('editor'); toast('Project saved');
+  });
 
-    function readLocalFile(e) {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        document.getElementById('eCode').value = String(reader.result || '');
-        if (!document.getElementById('eName').value) {
-          document.getElementById('eName').value = file.name.replace(/\.[^/.]+$/, '');
-        }
-      };
-      reader.readAsText(file);
-    }
+  $('eFile').addEventListener('change', function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      $('eCode').value = String(r.result || '');
+      if (!$('eName').value) $('eName').value = f.name.replace(/\.[^.]+$/, '');
+    };
+    r.readAsText(f); e.target.value = '';
+  });
 
-    function handleSave(e) {
-      e.preventDefault();
-      const id = document.getElementById('eId').value;
-      const name = document.getElementById('eName').value.trim();
-      const language = document.getElementById('eLang').value;
-      const description = document.getElementById('eDesc').value.trim();
-      const repoUrl = document.getElementById('eRepo').value.trim();
-      const htmlUrl = document.getElementById('eHtml').value.trim();
-      const code = document.getElementById('eCode').value;
+  $('importFile').addEventListener('change', function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      try {
+        var arr = JSON.parse(String(r.result));
+        if (!Array.isArray(arr)) throw new Error('not an array');
+        items = arr.map(normalize); save(); render(); toast('Imported ' + items.length + ' projects');
+      } catch (err) { toast('Import failed: not a valid projects JSON file'); }
+    };
+    r.readAsText(f); e.target.value = '';
+  });
 
-      if (id) {
-        const idx = items.findIndex((x) => x.id === id);
-        if (idx !== -1) {
-          items[idx] = { ...items[idx], name, language, description, repoUrl, htmlUrl, code };
-        }
-      } else {
-        items.unshift({
-          id: `${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Date.now().toString(36)}`,
-          name,
-          language,
-          description,
-          repoUrl,
-          htmlUrl,
-          code
-        });
-      }
-
-      saveItems();
-      renderGrid();
-      closeEditor();
-    }
-
-    function removeItem(id) {
-      if (!confirm('Delete this project?')) return;
-      items = items.filter((x) => x.id !== id);
-      saveItems();
-      renderGrid();
-    }
-
-    function exportJSON() {
-      const blob = new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'pandey-subh-1808-projects.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function importJSON(e) {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const parsed = JSON.parse(String(reader.result || '[]'));
-          if (!Array.isArray(parsed)) throw new Error('Invalid');
-          items = parsed;
-          saveItems();
-          renderGrid();
-          alert('Imported.');
-        } catch (_) {
-          alert('Invalid JSON file.');
-        }
-      };
-      reader.readAsText(file);
-      e.target.value = '';
-    }
-
-    loadItems();
-    renderGrid();
-  </script>
+  load(); render();
+})();
+</script>
 </body>
 </html>
