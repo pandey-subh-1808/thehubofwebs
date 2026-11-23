@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pandey-subh-1808 — Code & Project Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <style>
+    :root {
+      --violet-primary: #6d4aff;
+      --violet-soft: #ede8ff;
+      --mint-accent: #22c55e;
+      --glass-bg: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.88);
+    }
+
+    body {
+      min-height: 100vh;
+      color: #1e1b4b;
+      background:
+        radial-gradient(circle at 12% 15%, rgba(167, 139, 250, 0.55), transparent 42%),
+        radial-gradient(circle at 88% 12%, rgba(110, 231, 183, 0.5), transparent 45%),
+        radial-gradient(circle at 55% 88%, rgba(196, 181, 253, 0.5), transparent 50%),
+        linear-gradient(135deg, #c7d2fe 0%, #e9d5ff 48%, #bbf7d0 100%);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 12px 32px -12px rgba(76, 29, 149, 0.14);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      box-shadow: 0 10px 24px -10px rgba(91, 33, 182, 0.12);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(109, 74, 255, 0.45);
+      box-shadow: 0 16px 30px -12px rgba(109, 74, 255, 0.22);
+    }
+
+    .hero-violet {
+      background: linear-gradient(135deg, #7c3aed 0%, #6d4aff 55%, #8b5cf6 100%);
+      box-shadow: 0 14px 28px -10px rgba(109, 74, 255, 0.45);
+    }
+
+    pre[class*="language-"] {
+      margin: 0;
+      border-radius: 0.75rem;
+      font-size: 0.84rem;
+      max-height: 410px;
+    }
+  </style>
+</head>
+<body class="flex flex-col">
+  <!-- Top Frosted Header -->
+  <header class="sticky top-0 z-30 px-4 pt-3">
+    <div class="max-w-6xl mx-auto glass-panel rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl hero-violet text-white font-bold flex items-center justify-center text-sm">
+          SP
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="font-bold text-base sm:text-lg text-slate-900">Subh Pandey</h1>
+            <a href="https://github.com/pandey-subh-1808" target="_blank" rel="noopener noreferrer" class="text-xs sm:text-sm font-medium text-[#6d4aff] hover:underline">
+              @pandey-subh-1808
+            </a>
+          </div>
+          <p class="text-xs text-slate-600">Project Vault & Code Hub • Expandable for Future Builds</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="openProjectModal()" class="px-3.5 py-2 rounded-xl hero-violet text-white text-xs sm:text-sm font-semibold hover:opacity-95 transition">
+          + Add Project
+        </button>
+        <button onclick="exportProjectsJSON()" class="px-3 py-2 rounded-xl bg-white/80 hover:bg-white border border-white text-slate-800 text-xs sm:text-sm font-medium transition">
+          Export JSON
+        </button>
+        <label class="px-3 py-2 rounded-xl bg-white/80 hover:bg-white border border-white text-slate-800 text-xs sm:text-sm font-medium cursor-pointer transition">
+          Import JSON
+          <input type="file" accept=".json" onchange="importProjectsJSON(event)" class="hidden" />
+        </label>
+        <button onclick="resetDefaultProjects()" class="px-3 py-2 rounded-xl bg-white/60 hover:bg-rose-50 border border-white text-slate-700 hover:text-rose-700 text-xs sm:text-sm font-medium transition">
+          Reset
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-5 space-y-5">
+    <!-- Quick Launch Strip for Hosted HTML Pages -->
+    <section class="glass-panel rounded-3xl p-4 sm:p-5">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <div>
+          <h2 class="text-sm sm:text-base font-bold text-slate-900">Quick Launch Hosted HTML Pages</h2>
+          <p class="text-xs text-slate-600">Direct links to your live GitHub Pages apps.</p>
+        </div>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-[#ede8ff] text-[#6d4aff] font-semibold">
+          GitHub Pages
+        </span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <a href="https://pandey-subh-1808.github.io/neon_run/neon_run.html" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-3.5 flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <div class="text-sm font-bold text-slate-900 truncate">Neon Run</div>
+            <div class="text-xs text-slate-500 truncate">neon_run.html</div>
+          </div>
+          <span class="px-3 py-1 rounded-xl hero-violet text-white text-xs font-semibold shrink-0">Open ↗</span>
+        </a>
+
+        <a href="https://pandey-subh-1808.github.io/cgpacalculator/grades.html" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-3.5 flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <div class="text-sm font-bold text-slate-900 truncate">CGPA & Grades</div>
+            <div class="text-xs text-slate-500 truncate">grades.html</div>
+          </div>
+          <span class="px-3 py-1 rounded-xl hero-violet text-white text-xs font-semibold shrink-0">Open ↗</span>
+        </a>
+
+        <a href="https://pandey-subh-1808.github.io/expenses/expenses.html" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-3.5 flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <div class="text-sm font-bold text-slate-900 truncate">Expenses Tracker</div>
+            <div class="text-xs text-slate-500 truncate">expenses.html</div>
+          </div>
+          <span class="px-3 py-1 rounded-xl hero-violet text-white text-xs font-semibold shrink-0">Open ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Top Summary Banner -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div class="lg:col-span-5 hero-violet rounded-3xl p-5 text-white flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full font-medium">
+            Codebase Overview
+          </span>
+          <span class="inline-flex items-center gap-1.5 text-xs bg-white/15 px-2.5 py-1 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-emerald-300"></span>
+            Ready for New Projects
+          </span>
+        </div>
+        <div class="my-4">
+          <div class="text-3xl sm:text-4xl font-extrabold tracking-tight" id="statTotal">0</div>
+          <p class="text-xs sm:text-sm text-purple-100 mt-1">Stored repositories & reusable code modules</p>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5 pt-2 border-t border-white/20 text-xs">
+          <div class="bg-white/15 rounded-2xl px-3 py-2">
+            <div class="text-purple-100">Pinned Modules</div>
+            <div id="statPinned" class="text-base font-bold mt-0.5">0</div>
+          </div>
+          <div class="bg-white/15 rounded-2xl px-3 py-2">
+            <div class="text-purple-100">Languages</div>
+            <div id="statLangs" class="text-base font-bold mt-0.5">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Filter Card -->
+      <div class="lg:col-span-7 glass-panel rounded-3xl p-5 flex flex-col justify-between gap-4">
+        <div>
+          <h2 class="text-base font-bold text-slate-900">Find & Filter Projects</h2>
+          <p class="text-xs text-slate-600 mt-0.5">Search across repository names, descriptions, tags, or source code.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-2.5">
+          <input
+            id="searchInput"
+            type="text"
+            oninput="renderProjects()"
+            placeholder="Search projects or code..."
+            class="flex-1 bg-white/85 border border-white rounded-2xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40"
+          />
+          <select
+            id="languageFilter"
+            onchange="renderProjects()"
+            class="bg-white/85 border border-white rounded-2xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40"
+          >
+            <option value="ALL">All Languages</option>
+            <option value="HTML">HTML</option>
+            <option value="Python">Python</option>
+            <option value="JavaScript">JavaScript</option>
+          </select>
+          <button
+            id="pinnedOnlyBtn"
+            onclick="togglePinnedFilter()"
+            class="px-4 py-2.5 rounded-2xl bg-white/85 border border-white text-sm font-medium text-slate-700 hover:border-[#6d4aff] transition"
+          >
+            ★ Pinned
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600 pt-1">
+          <span>Add any project's Live HTML URL to get an instant <strong>Open HTML</strong> button.</span>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-800 font-medium">
+            Auto-saved in Browser
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></section>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-14 glass-panel rounded-3xl">
+      <p class="text-slate-800 font-semibold">No matching projects found.</p>
+      <p class="text-xs text-slate-600 mt-1">Adjust filters or click "+ Add Project" to upload new code.</p>
+    </div>
+  </main>
+
+  <!-- Code & Live Preview Modal -->
+  <div id="viewerModal" class="fixed inset-0 bg-slate-950/45 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="glass-panel bg-white/90 rounded-3xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden">
+      <div class="px-5 py-4 border-b border-purple-100 flex items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h2 id="viewerTitle" class="font-bold text-lg text-slate-900"></h2>
+            <span id="viewerLangBadge" class="text-xs px-2.5 py-0.5 rounded-full bg-[#ede8ff] text-[#6d4aff] font-semibold"></span>
+          </div>
+          <p id="viewerDesc" class="text-xs text-slate-600 mt-0.5"></p>
+        </div>
+        <button onclick="closeViewerModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">✕</button>
+      </div>
+
+      <div class="px-5 py-2.5 bg-white/60 border-b border-purple-100 flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <button id="tabCodeBtn" onclick="switchViewerTab('code')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold hero-violet text-white">
+            Code
+          </button>
+          <button id="tabPreviewBtn" onclick="switchViewerTab('preview')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white text-slate-700 hover:bg-purple-50">
+            Live HTML Preview
+          </button>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="copyViewerCode()" class="px-3 py-1.5 rounded-xl text-xs font-medium bg-white hover:bg-purple-50 text-slate-800 border border-purple-100">
+            Copy Code
+          </button>
+          <button onclick="downloadViewerFile()" class="px-3 py-1.5 rounded-xl text-xs font-medium bg-white hover:bg-purple-50 text-slate-800 border border-purple-100">
+            Download
+          </button>
+        </div>
+      </div>
+
+      <div class="p-5 overflow-y-auto flex-1">
+        <div id="codeTabPanel">
+          <pre><code id="viewerCodeBlock" class="language-markup"></code></pre>
+        </div>
+        <div id="previewTabPanel" class="hidden">
+          <iframe id="livePreviewFrame" sandbox="allow-scripts" class="w-full h-[380px] rounded-2xl border border-purple-200 bg-white"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add / Edit Project Modal -->
+  <div id="editorModal" class="fixed inset-0 bg-slate-950/45 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="glass-panel bg-white/95 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden">
+      <div class="px-5 py-4 border-b border-purple-100 flex items-center justify-between">
+        <h2 id="editorModalTitle" class="font-bold text-lg text-slate-900">Add New Project</h2>
+        <button onclick="closeProjectModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">✕</button>
+      </div>
+
+      <form id="projectForm" onsubmit="saveProject(event)" class="p-5 space-y-4 overflow-y-auto">
+        <input type="hidden" id="editProjectId" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Project / Repo Name *</label>
+            <input id="projName" type="text" required placeholder="e.g., circuit-analyzer" class="w-full bg-white border border-purple-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Language *</label>
+            <select id="projLang" class="w-full bg-white border border-purple-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40">
+              <option value="HTML">HTML</option>
+              <option value="Python">Python</option>
+              <option value="JavaScript">JavaScript</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Short Description *</label>
+          <input id="projDesc" type="text" required placeholder="Describe what this project does..." class="w-full bg-white border border-purple-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">GitHub Repo URL</label>
+            <input id="projRepoUrl" type="url" placeholder="https://github.com/pandey-subh-1808/..." class="w-full bg-white border border-purple-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Live HTML / Demo URL</label>
+            <input id="projDemoUrl" type="url" placeholder="https://pandey-subh-1808.github.io/..." class="w-full bg-white border border-purple-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40" />
+          </div>
+        </div>
+
+        <label class="inline-flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+          <input id="projPinned" type="checkbox" class="rounded accent-[#6d4aff]" />
+          <span>Pin project to top</span>
+        </label>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="text-xs font-semibold text-slate-700">Source Code *</label>
+            <label class="text-xs font-semibold text-[#6d4aff] hover:underline cursor-pointer">
+              Upload local file
+              <input type="file" onchange="loadCodeFromFile(event)" class="hidden" />
+            </label>
+          </div>
+          <textarea id="projCode" rows="10" required placeholder="Paste or upload your code..." class="w-full font-mono text-xs bg-slate-900 text-slate-100 border border-purple-200 rounded-2xl p-3.5 focus:outline-none focus:ring-2 focus:ring-[#6d4aff]/40"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeProjectModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-sm font-medium text-slate-700">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-xl hero-violet text-white text-sm font-semibold">
+            Save Project
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'pandey_subh_1808_glass_hub_v2';
+
+    const DEFAULT_PROJECTS = [
+      {
+        id: 'neon_run',
+        name: 'neon_run',
+        language: 'HTML',
+        description: 'HTML5 canvas runner game with jumping mechanics and score progression.',
+        repoUrl: 'https://github.com/pandey-subh-1808/neon_run',
+        demoUrl: 'https://pandey-subh-1808.github.io/neon_run/neon_run.html',
+        pinned: true,
+        code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neon Run</title>
+  <style>
+    body { margin: 0; background: #f5f3ff; display: grid; place-items: center; height: 100vh; font-family: system-ui, sans-serif; color: #4c1d95; }
+    canvas { background: #ffffff; border: 2px solid #8b5cf6; border-radius: 16px; }
+  </style>
+</head>
+<body>
+  <div>
+    <div style="margin-bottom:8px;font-weight:600;">Space / Click to Jump — Score: <span id="sc">0</span></div>
+    <canvas id="c" width="600" height="200"></canvas>
+  </div>
+  <script>
+    const c = document.getElementById('c'), ctx = c.getContext('2d'), sc = document.getElementById('sc');
+    let p = { x: 50, y: 146, w: 24, h: 24, vy: 0, g: true };
+    let obs = { x: 600, y: 150, w: 20, h: 20, spd: 5 }, pts = 0;
+    const jump = () => { if (p.g) { p.vy = -10; p.g = false; } };
+    addEventListener('keydown', e => { if (e.code === 'Space') jump(); });
+    c.addEventListener('pointerdown', jump);
+    (function tick() {
+      ctx.clearRect(0, 0, c.width, c.height);
+      ctx.strokeStyle = '#ddd6fe'; ctx.beginPath(); ctx.moveTo(0, 170); ctx.lineTo(c.width, 170); ctx.stroke();
+      p.vy += 0.5; p.y += p.vy;
+      if (p.y >= 146) { p.y = 146; p.vy = 0; p.g = true; }
+      obs.x -= obs.spd;
+      if (obs.x < -obs.w) { obs.x = c.width + 120; pts++; obs.spd = Math.min(11, 5 + pts * 0.2); sc.textContent = pts; }
+      if (p.x < obs.x + obs.w && p.x + p.w > obs.x && p.y < obs.y + obs.h && p.y + p.h > obs.y) { pts = 0; obs.spd = 5; obs.x = c.width; sc.textContent = pts; }
+      ctx.fillStyle = '#6d4aff'; ctx.fillRect(p.x, p.y, p.w, p.h);
+      ctx.fillStyle = '#10b981'; ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>`
+      },
+      {
+        id: 'cgpacalculator',
+        name: 'cgpacalculator (grades.html)',
+        language: 'HTML',
+        description: 'Credit-weighted grade and CGPA calculator hosted at grades.html.',
+        repoUrl: 'https://github.com/pandey-subh-1808/cgpacalculator',
+        demoUrl: 'https://pandey-subh-1808.github.io/cgpacalculator/grades.html',
+        pinned: true,
+        code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grades & CGPA Calculator</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #ecfdf5; color: #0f172a; max-width: 560px; margin: 2rem auto; padding: 0 1rem; }
+    .card { background: #fff; border-radius: 20px; padding: 1.25rem; box-shadow: 0 10px 24px rgba(16,185,129,0.12); }
+    .row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+    input, button { padding: 0.55rem 0.75rem; border-radius: 10px; border: 1px solid #cbd5e1; }
+    button.calc { background: #16a34a; color: #fff; border: none; font-weight: 600; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Grades & CGPA Calculator</h2>
+    <div id="courses">
+      <div class="row">
+        <input type="number" step="0.5" placeholder="Credits" class="cr" />
+        <input type="number" step="0.01" min="0" max="10" placeholder="Grade Point" class="gp" />
+      </div>
+    </div>
+    <div class="row">
+      <button onclick="addCourse()">+ Course</button>
+      <button class="calc" onclick="compute()">Calculate</button>
+    </div>
+    <h3 id="out">CGPA: --</h3>
+  </div>
+  <script>
+    function addCourse() {
+      const d = document.createElement('div');
+      d.className = 'row';
+      d.innerHTML = '<input type="number" step="0.5" placeholder="Credits" class="cr" /><input type="number" step="0.01" min="0" max="10" placeholder="Grade Point" class="gp" />';
+      document.getElementById('courses').appendChild(d);
+    }
+    function compute() {
+      const crs = [...document.querySelectorAll('.cr')].map(i => parseFloat(i.value));
+      const gps = [...document.querySelectorAll('.gp')].map(i => parseFloat(i.value));
+      let sumCr = 0, sumW = 0;
+      for (let i = 0; i < crs.length; i++) {
+        if (!isNaN(crs[i]) && !isNaN(gps[i]) && crs[i] > 0) {
+          sumCr += crs[i];
+          sumW += crs[i] * gps[i];
+        }
+      }
+      document.getElementById('out').textContent = 'CGPA: ' + (sumCr ? (sumW / sumCr).toFixed(2) : '--');
+    }
+  </script>
+</body>
+</html>`
+      },
+      {
+        id: 'expenses',
+        name: 'expenses (expenses.html)',
+        language: 'HTML',
+        description: 'Personal expense tracker hosted at expenses.html for logging items and totals.',
+        repoUrl: 'https://github.com/pandey-subh-1808/expenses',
+        demoUrl: 'https://pandey-subh-1808.github.io/expenses/expenses.html',
+        pinned: true,
+        code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f3e8ff; color: #1e1b4b; max-width: 580px; margin: 2rem auto; padding: 0 1rem; }
+    .box { background: #fff; border-radius: 20px; padding: 1.25rem; box-shadow: 0 10px 25px rgba(109,74,255,0.12); }
+    form { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    input, button { padding: 0.6rem 0.85rem; border-radius: 12px; border: 1px solid #ddd6fe; }
+    button { background: #6d4aff; color: #fff; font-weight: 600; border: none; cursor: pointer; }
+    li { display: flex; justify-content: space-between; padding: 0.55rem 0; border-bottom: 1px solid #f1f5f9; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Expenses</h2>
+    <form id="f">
+      <input id="item" type="text" placeholder="Expense item" required />
+      <input id="amt" type="number" step="0.01" placeholder="Amount" required />
+      <button type="submit">Add</button>
+    </form>
+    <ul id="list"></ul>
+    <strong>Total: <span id="total">0.00</span></strong>
+  </div>
+  <script>
+    const entries = [];
+    document.getElementById('f').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const item = document.getElementById('item').value.trim();
+      const amt = parseFloat(document.getElementById('amt').value);
+      if (!item || isNaN(amt)) return;
+      entries.push({ item, amt });
+      e.target.reset();
+      document.getElementById('list').innerHTML = entries.map(x => \`<li><span>\${x.item}</span><span>\${x.amt.toFixed(2)}</span></li>\`).join('');
+      document.getElementById('total').textContent = entries.reduce((s, x) => s + x.amt, 0).toFixed(2);
+    });
+  </script>
+</body>
+</html>`
+      },
+      {
+        id: 'snake-server',
+        name: 'snake-server',
+        language: 'JavaScript',
+        description: 'Real-time WebSocket server for multiplayer Snake rooms and state sync.',
+        repoUrl: 'https://github.com/pandey-subh-1808/snake-server',
+        demoUrl: '',
+        pinned: false,
+        code: `const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+const rooms = new Map();
+
+wss.on('connection', (socket) => {
+  socket.on('message', (raw) => {
+    try {
+      const data = JSON.parse(raw.toString());
+      if (data.type === 'join' && data.room) {
+        if (!rooms.has(data.room)) rooms.set(data.room, new Set());
+        rooms.get(data.room).add(socket);
+        socket.room = data.room;
+      } else if (socket.room && rooms.has(socket.room)) {
+        for (const client of rooms.get(socket.room)) {
+          if (client !== socket && client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Invalid message:', err);
+    }
+  });
+
+  socket.on('close', () => {
+    if (socket.room && rooms.has(socket.room)) {
+      rooms.get(socket.room).delete(socket);
+    }
+  });
+});
+
+console.log('Snake server running on ws://localhost:8080');`
+      },
+      {
+        id: 'ultimate-game-arcade',
+        name: 'ultimate-game-arcade',
+        language: 'HTML',
+        description: 'Browser game launcher hosting interactive mini-games and scoreboards.',
+        repoUrl: 'https://github.com/pandey-subh-1808/ultimate-game-arcade',
+        demoUrl: 'https://pandey-subh-1808.github.io/ultimate-game-arcade/',
+        pinned: false,
+        code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ultimate Game Arcade</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #ede8ff; color: #1e1b4b; text-align: center; padding: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; max-width: 760px; margin: 2rem auto; }
+    .card { background: rgba(255,255,255,0.85); border-radius: 20px; padding: 1.25rem; box-shadow: 0 10px 24px rgba(109,74,255,0.12); }
+    .btn { display: inline-block; margin-top: 0.75rem; padding: 0.55rem 1rem; border-radius: 12px; background: #6d4aff; color: #fff; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Ultimate Game Arcade</h1>
+  <p>Launch browser games from one hub.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Neon Run</h3>
+      <p>Fast obstacle dodge runner.</p>
+      <a class="btn" href="https://pandey-subh-1808.github.io/neon_run/neon_run.html" target="_blank">Launch Neon Run</a>
+    </div>
+  </div>
+</body>
+</html>`
+      },
+      {
+        id: 'taskflow-py',
+        name: 'taskflow.py',
+        language: 'Python',
+        description: 'Python task manager for organizing daily priorities and project tasks.',
+        repoUrl: 'https://github.com/pandey-subh-1808/taskflow.py',
+        demoUrl: '',
+        pinned: false,
+        code: `import json
+from pathlib import Path
+
+STORE = Path("taskflow_data.json")
+
+def load_tasks():
+    if not STORE.exists():
+        return []
+    return json.loads(STORE.read_text(encoding="utf-8"))
+
+def save_tasks(tasks):
+    STORE.write_text(json.dumps(tasks, indent=2), encoding="utf-8")
+
+def add_task(title, tag="General"):
+    tasks = load_tasks()
+    tasks.append({"id": len(tasks) + 1, "title": title, "tag": tag, "done": False})
+    save_tasks(tasks)
+    return tasks[-1]
+
+def list_tasks():
+    for task in load_tasks():
+        mark = "✔" if task["done"] else " "
+        print(f"[{mark}] #{task['id']} [{task['tag']}] {task['title']}")
+
+if __name__ == "__main__":
+    add_task("Add new project module to code hub", "GitHub")
+    list_tasks()`
+      }
+    ];
+
+    let projects = [];
+    let pinnedOnly = false;
+    let activeViewerProject = null;
+
+    function loadProjects() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          projects = JSON.parse(saved);
+          return;
+        } catch (_) {}
+      }
+      projects = structuredClone(DEFAULT_PROJECTS);
+      persistProjects();
+    }
+
+    function persistProjects() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+    }
+
+    function resetDefaultProjects() {
+      if (!confirm('Reset to starter projects? Export JSON first if you want to keep custom changes.')) return;
+      projects = structuredClone(DEFAULT_PROJECTS);
+      persistProjects();
+      renderProjects();
+    }
+
+    function togglePinnedFilter() {
+      pinnedOnly = !pinnedOnly;
+      const btn = document.getElementById('pinnedOnlyBtn');
+      btn.classList.toggle('ring-2', pinnedOnly);
+      btn.classList.toggle('ring-[#6d4aff]', pinnedOnly);
+      btn.classList.toggle('text-[#6d4aff]', pinnedOnly);
+      renderProjects();
+    }
+
+    function togglePinProject(id) {
+      const item = projects.find(p => p.id === id);
+      if (!item) return;
+      item.pinned = !item.pinned;
+      persistProjects();
+      renderProjects();
+    }
+
+    function deleteProject(id) {
+      if (!confirm('Remove this project from the hub?')) return;
+      projects = projects.filter(p => p.id !== id);
+      persistProjects();
+      renderProjects();
+    }
+
+    function renderProjects() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const lang = document.getElementById('languageFilter').value;
+
+      const list = projects
+        .filter(p => {
+          if (pinnedOnly && !p.pinned) return false;
+          if (lang !== 'ALL' && p.language !== lang) return false;
+          if (!q) return true;
+          return (
+            p.name.toLowerCase().includes(q) ||
+            p.description.toLowerCase().includes(q) ||
+            p.language.toLowerCase().includes(q) ||
+            p.code.toLowerCase().includes(q)
+          );
+        })
+        .sort((a, b) => Number(b.pinned) - Number(a.pinned) || a.name.localeCompare(b.name));
+
+      document.getElementById('statTotal').textContent = projects.length;
+      document.getElementById('statPinned').textContent = projects.filter(p => p.pinned).length;
+      document.getElementById('statLangs').textContent = new Set(projects.map(p => p.language)).size;
+
+      const grid = document.getElementById('projectsGrid');
+      const empty = document.getElementById('emptyState');
+
+      if (!list.length) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      empty.classList.add('hidden');
+      grid.innerHTML = list.map(proj => `
+        <article class="glass-card rounded-3xl p-5 flex flex-col justify-between gap-4">
+          <div class="space-y-2.5">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <span class="w-9 h-9 rounded-2xl bg-[#ede8ff] text-[#6d4aff] font-bold text-xs flex items-center justify-center shrink-0">
+                  ${escapeHTML(proj.language.slice(0, 2).toUpperCase())}
+                </span>
+                <h3 class="font-bold text-base text-slate-900 truncate">${escapeHTML(proj.name)}</h3>
+              </div>
+              <button onclick="togglePinProject('${proj.id}')" title="Pin project" class="text-base ${proj.pinned ? 'text-amber-500' : 'text-slate-400 hover:text-slate-600'}">
+                ${proj.pinned ? '★' : '☆'}
+              </button>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${escapeHTML(proj.description)}</p>
+
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-800 font-semibold">
+                ${escapeHTML(proj.language)}
+              </span>
+              ${proj.repoUrl ? `<a href="${escapeAttr(proj.repoUrl)}" target="_blank" rel="noopener noreferrer" class="text-xs font-medium text-[#6d4aff] hover:underline">Repo ↗</a>` : ''}
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-purple-100/90">
+            <div class="flex items-center gap-1.5">
+              <button onclick="openViewer('${proj.id}')" class="px-3 py-1.5 rounded-xl bg-[#ede8ff] hover:bg-[#ddd3ff] text-[#6d4aff] text-xs font-bold transition">
+                View Code
+              </button>
+              ${proj.demoUrl ? `<a href="${escapeAttr(proj.demoUrl)}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl hero-violet text-white text-xs font-semibold transition">Open HTML ↗</a>` : ''}
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="openProjectModal('${proj.id}')" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-purple-50 text-xs font-medium text-slate-700 border border-purple-100">
+                Edit
+              </button>
+              <button onclick="deleteProject('${proj.id}')" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-xs font-medium text-rose-600 border border-purple-100">
+                Delete
+              </button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function openViewer(id) {
+      const proj = projects.find(p => p.id === id);
+      if (!proj) return;
+      activeViewerProject = proj;
+
+      document.getElementById('viewerTitle').textContent = proj.name;
+      document.getElementById('viewerLangBadge').textContent = proj.language;
+      document.getElementById('viewerDesc').textContent = proj.description;
+
+      const codeEl = document.getElementById('viewerCodeBlock');
+      codeEl.className = proj.language === 'Python' ? 'language-python' : proj.language === 'JavaScript' ? 'language-javascript' : 'language-markup';
+      codeEl.textContent = proj.code;
+      Prism.highlightElement(codeEl);
+
+      const previewBtn = document.getElementById('tabPreviewBtn');
+      const isHtml = proj.language === 'HTML';
+      previewBtn.disabled = !isHtml;
+      previewBtn.classList.toggle('opacity-40', !isHtml);
+      previewBtn.classList.toggle('cursor-not-allowed', !isHtml);
+
+      switchViewerTab('code');
+      const modal = document.getElementById('viewerModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeViewerModal() {
+      const modal = document.getElementById('viewerModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      activeViewerProject = null;
+    }
+
+    function switchViewerTab(tab) {
+      const codePanel = document.getElementById('codeTabPanel');
+      const previewPanel = document.getElementById('previewTabPanel');
+      const codeBtn = document.getElementById('tabCodeBtn');
+      const previewBtn = document.getElementById('tabPreviewBtn');
+
+      if (tab === 'preview' && activeViewerProject?.language === 'HTML') {
+        codePanel.classList.add('hidden');
+        previewPanel.classList.remove('hidden');
+        previewBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold hero-violet text-white';
+        codeBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white text-slate-700 hover:bg-purple-50';
+        document.getElementById('livePreviewFrame').srcdoc = activeViewerProject.code;
+      } else {
+        previewPanel.classList.add('hidden');
+        codePanel.classList.remove('hidden');
+        codeBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold hero-violet text-white';
+        previewBtn.className = `px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white text-slate-700 hover:bg-purple-50 ${activeViewerProject?.language !== 'HTML' ? 'opacity-40 cursor-not-allowed' : ''}`;
+      }
+    }
+
+    function copyViewerCode() {
+      if (!activeViewerProject) return;
+      navigator.clipboard.writeText(activeViewerProject.code);
+      alert('Code copied to clipboard!');
+    }
+
+    function downloadViewerFile() {
+      if (!activeViewerProject) return;
+      const extMap = { HTML: 'html', Python: 'py', JavaScript: 'js' };
+      const ext = extMap[activeViewerProject.language] || 'txt';
+      const filename = activeViewerProject.name.endsWith(`.${ext}`) ? activeViewerProject.name : `${activeViewerProject.name}.${ext}`;
+      const blob = new Blob([activeViewerProject.code], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function openProjectModal(editId = null) {
+      document.getElementById('projectForm').reset();
+      document.getElementById('editProjectId').value = '';
+
+      if (editId) {
+        const proj = projects.find(p => p.id === editId);
+        if (!proj) return;
+        document.getElementById('editorModalTitle').textContent = 'Edit Project';
+        document.getElementById('editProjectId').value = proj.id;
+        document.getElementById('projName').value = proj.name;
+        document.getElementById('projLang').value = proj.language;
+        document.getElementById('projDesc').value = proj.description;
+        document.getElementById('projRepoUrl').value = proj.repoUrl || '';
+        document.getElementById('projDemoUrl').value = proj.demoUrl || '';
+        document.getElementById('projPinned').checked = Boolean(proj.pinned);
+        document.getElementById('projCode').value = proj.code;
+      } else {
+        document.getElementById('editorModalTitle').textContent = 'Add New Project';
+      }
+
+      const modal = document.getElementById('editorModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('editorModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function loadCodeFromFile(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        document.getElementById('projCode').value = String(reader.result || '');
+        if (!document.getElementById('projName').value) {
+          document.getElementById('projName').value = file.name.replace(/\.[^/.]+$/, '');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function saveProject(event) {
+      event.preventDefault();
+      const existingId = document.getElementById('editProjectId').value;
+      const name = document.getElementById('projName').value.trim();
+      const language = document.getElementById('projLang').value;
+      const description = document.getElementById('projDesc').value.trim();
+      const repoUrl = document.getElementById('projRepoUrl').value.trim();
+      const demoUrl = document.getElementById('projDemoUrl').value.trim();
+      const pinned = document.getElementById('projPinned').checked;
+      const code = document.getElementById('projCode').value;
+
+      if (existingId) {
+        const idx = projects.findIndex(p => p.id === existingId);
+        if (idx !== -1) {
+          projects[idx] = { ...projects[idx], name, language, description, repoUrl, demoUrl, pinned, code };
+        }
+      } else {
+        const id = `${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Date.now().toString(36)}`;
+        projects.push({ id, name, language, description, repoUrl, demoUrl, pinned, code });
+      }
+
+      persistProjects();
+      renderProjects();
+      closeProjectModal();
+    }
+
+    function exportProjectsJSON() {
+      const blob = new Blob([JSON.stringify(projects, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'pandey-subh-1808-projects.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importProjectsJSON(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || '[]'));
+          if (!Array.isArray(parsed)) throw new Error('Invalid JSON');
+          projects = parsed;
+          persistProjects();
+          renderProjects();
+          alert('Imported projects successfully!');
+        } catch (_) {
+          alert('Please select a valid JSON backup file.');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function escapeHTML(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function escapeAttr(str) {
+      return escapeHTML(str);
+    }
+
+    loadProjects();
+    renderProjects();
+  </script>
+</body>
+</html>
