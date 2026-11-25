@@ -291,10 +291,10 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
   // Permanent live projects: re-inserted on every load on every device, and always loaded from the live URL,
   // so any update you push to GitHub Pages shows up everywhere without touching this file.
   var LIVE = [
-    { id:'omnimathsolver', name:'omnimathsolver', language:'HTML', pinned:true, live:true,
-      description:'Math solver that always runs the latest deployed version.',
+    { id:'omnimathsolver', name:'OmniMath Solver', language:'HTML', pinned:false, live:true,
+      description:'Interactive symbolic mathematics solver for derivatives, integrals, equations, limits and matrices.',
       repoUrl:'https://github.com/pandey-subh-1808/omnimathsolver',
-      demoUrl:'https://pandey-subh-1808.github.io/omnimathsolver/math%20solver%20html.html',
+      demoUrl:'https://pandey-subh-1808.github.io/omnimathsolver/',
       code:'Loading the latest code from GitHub Pages...' }
   ];
   var LC = { HTML:'#ff7a45', JavaScript:'#f7c948', Python:'#4a90e2', Other:'#9a9ab0' };
@@ -305,8 +305,19 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
   function ensureLive() {
-    var ids = LIVE.map(function (p) { return p.id; });
-    items = LIVE.map(clone).concat(items.filter(function (p) { return ids.indexOf(p.id) < 0; }));
+    // Keep the canonical live entry once, even if an older/local copy used another id.
+    var liveIds = LIVE.map(function (p) { return p.id; });
+    var liveRepos = LIVE.map(function (p) { return String(p.repoUrl || '').replace(/\\/$/, '').toLowerCase(); });
+    var seenIds = Object.create(null), seenRepos = Object.create(null);
+    var extras = items.filter(function (p) {
+      var repo = String(p.repoUrl || '').replace(/\\/$/, '').toLowerCase();
+      if (liveIds.indexOf(p.id) >= 0 || (repo && liveRepos.indexOf(repo) >= 0)) return false;
+      if (seenIds[p.id] || (repo && seenRepos[repo])) return false;
+      seenIds[p.id] = true;
+      if (repo) seenRepos[repo] = true;
+      return true;
+    });
+    items = LIVE.map(clone).concat(extras);
   }
   function save() { ensureLive(); try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
   function load() {
