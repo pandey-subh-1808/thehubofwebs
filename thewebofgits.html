@@ -304,13 +304,17 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
   var $ = function (id) { return document.getElementById(id); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
+  function cleanRepoUrl(value) {
+    var url = String(value || '').toLowerCase();
+    return url.charAt(url.length - 1) === '/' ? url.slice(0, -1) : url;
+  }
   function ensureLive() {
-    // Keep the canonical live entry once, even if an older/local copy used another id.
+    // Keep one canonical card for each live repository and preserve all other saved projects.
     var liveIds = LIVE.map(function (p) { return p.id; });
-    var liveRepos = LIVE.map(function (p) { return String(p.repoUrl || '').replace(/\\/$/, '').toLowerCase(); });
+    var liveRepos = LIVE.map(function (p) { return cleanRepoUrl(p.repoUrl); });
     var seenIds = Object.create(null), seenRepos = Object.create(null);
     var extras = items.filter(function (p) {
-      var repo = String(p.repoUrl || '').replace(/\\/$/, '').toLowerCase();
+      var repo = cleanRepoUrl(p.repoUrl);
       if (liveIds.indexOf(p.id) >= 0 || (repo && liveRepos.indexOf(repo) >= 0)) return false;
       if (seenIds[p.id] || (repo && seenRepos[repo])) return false;
       seenIds[p.id] = true;
