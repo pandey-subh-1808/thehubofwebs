@@ -254,39 +254,105 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
 <script>
 (function () {
   'use strict';
-  var KEY = 'subh_project_hub_v5', THEME = 'subh_hub_theme';
+  var KEY = 'subh_project_hub_v6', THEME = 'subh_hub_theme';
 
   // Code samples are plain strings. Never write a literal closing script tag inside them;
   // write it as "<\/script>" or the browser ends this script early and prints the rest as text.
   var STARTER = [
+    { id:'omni-math-solver', name:'OMNI MATH SOLVER', language:'HTML', pinned:true,
+      description:'Solve the complex problems of mathematics in seconds.',
+      repoUrl:'https://github.com/pandey-subh-1808/omnimathsolver',
+      demoUrl:'https://pandey-subh-1808.github.io/omnimathsolver/math%20solver%20html.html',
+      code:'<!DOCTYPE html>
+<html>
+<head><title>Omni Math Solver</title></head>
+<body>
+  <h1>Omni Math Solver</h1>
+</body>
+</html>' },
     { id:'neon-run', name:'neon_run', language:'HTML', pinned:true,
       description:'Canvas runner game with jumping and score tracking.',
       repoUrl:'https://github.com/pandey-subh-1808/neon_run',
       demoUrl:'https://pandey-subh-1808.github.io/neon_run/neon_run.html',
-      code:'<!DOCTYPE html>\n<html>\n<head><title>Neon Run</title></head>\n<body>\n  <canvas id="game"></canvas>\n</body>\n</html>' },
+      code:'<!DOCTYPE html>
+<html>
+<head><title>Neon Run</title></head>
+<body>
+  <canvas id="game"></canvas>
+</body>
+</html>' },
     { id:'cgpacalculator', name:'cgpacalculator', language:'HTML', pinned:true,
       description:'Grades and CGPA calculator.',
       repoUrl:'https://github.com/pandey-subh-1808/cgpacalculator',
       demoUrl:'https://pandey-subh-1808.github.io/cgpacalculator/grades.html',
-      code:'<!DOCTYPE html>\n<html>\n<head><title>Grades & CGPA</title></head>\n<body>\n  <h1>Grades & CGPA Calculator</h1>\n</body>\n</html>' },
+      code:'<!DOCTYPE html>
+<html>
+<head><title>Grades & CGPA</title></head>
+<body>
+  <h1>Grades & CGPA Calculator</h1>
+</body>
+</html>' },
     { id:'expenses', name:'expenses', language:'HTML', pinned:true,
       description:'Daily expense tracker.',
       repoUrl:'https://github.com/pandey-subh-1808/expenses',
       demoUrl:'https://pandey-subh-1808.github.io/expenses/expenses.html',
-      code:'<!DOCTYPE html>\n<html>\n<head><title>Expenses</title></head>\n<body>\n  <h1>Expense Tracker</h1>\n</body>\n</html>' },
+      code:'<!DOCTYPE html>
+<html>
+<head><title>Expenses</title></head>
+<body>
+  <h1>Expense Tracker</h1>
+</body>
+</html>' },
     { id:'snake-server', name:'snake-server', language:'JavaScript', pinned:false,
       description:'Real-time WebSocket server for multiplayer Snake rooms and state sync.',
       repoUrl:'https://github.com/pandey-subh-1808/snake-server', demoUrl:'',
-      code:"const WebSocket = require('ws');\nconst wss = new WebSocket.Server({ port: 8080 });\nconst rooms = new Map();\n\nwss.on('connection', (socket) => {\n  socket.on('message', (raw) => {\n    try {\n      const data = JSON.parse(raw.toString());\n      if (data.type === 'join' && data.room) {\n        if (!rooms.has(data.room)) rooms.set(data.room, new Set());\n        rooms.get(data.room).add(socket);\n        socket.room = data.room;\n      } else if (socket.room && rooms.has(socket.room)) {\n        for (const client of rooms.get(socket.room)) {\n          if (client !== socket && client.readyState === WebSocket.OPEN) {\n            client.send(JSON.stringify(data));\n          }\n        }\n      }\n    } catch (err) {\n      console.error('Invalid message:', err);\n    }\n  });\n  socket.on('close', () => {\n    if (socket.room && rooms.has(socket.room)) rooms.get(socket.room).delete(socket);\n  });\n});\nconsole.log('Snake server running on ws://localhost:8080');" },
+      code:"const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+const rooms = new Map();
+
+wss.on('connection', (socket) => {
+  socket.on('message', (raw) => {
+    try {
+      const data = JSON.parse(raw.toString());
+      if (data.type === 'join' && data.room) {
+        if (!rooms.has(data.room)) rooms.set(data.room, new Set());
+        rooms.get(data.room).add(socket);
+        socket.room = data.room;
+      } else if (socket.room && rooms.has(socket.room)) {
+        for (const client of rooms.get(socket.room)) {
+          if (client !== socket && client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Invalid message:', err);
+    }
+  });
+  socket.on('close', () => {
+    if (socket.room && rooms.has(socket.room)) rooms.get(socket.room).delete(socket);
+  });
+});
+console.log('Snake server running on ws://localhost:8080');" },
     { id:'ultimate-game-arcade', name:'ultimate-game-arcade', language:'HTML', pinned:true,
       description:'Browser game launcher hosting interactive mini-games and scoreboards.',
       repoUrl:'https://github.com/pandey-subh-1808/ultimate-game-arcade',
       demoUrl:'https://pandey-subh-1808.github.io/ultimate-game-arcade/',
-      code:'<!DOCTYPE html>\n<html>\n<head><title>Arcade</title></head>\n<body><h1>Ultimate Game Arcade</h1></body>\n</html>' },
+      code:'<!DOCTYPE html>
+<html>
+<head><title>Arcade</title></head>
+<body><h1>Ultimate Game Arcade</h1></body>
+</html>' },
     { id:'taskflow-py', name:'taskflow.py', language:'Python', pinned:false,
       description:'Python task and workflow helper.',
       repoUrl:'https://github.com/pandey-subh-1808/taskflow.py', demoUrl:'',
-      code:'tasks = []\n\ndef add_task(name):\n    tasks.append({"name": name, "done": False})\n    return tasks\n\nprint(add_task("Write the first task"))' }
+      code:'tasks = []
+
+def add_task(name):
+    tasks.append({"name": name, "done": False})
+    return tasks
+
+print(add_task("Write the first task"))' }
   ];
   var LC = { HTML:'#ff7a45', JavaScript:'#f7c948', Python:'#4a90e2', Other:'#9a9ab0' };
   var WORDS = ['games.', 'tools.', 'servers.', 'ideas.'];
