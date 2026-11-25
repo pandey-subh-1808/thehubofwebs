@@ -288,6 +288,15 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
       repoUrl:'https://github.com/pandey-subh-1808/taskflow.py', demoUrl:'',
       code:'tasks = []\n\ndef add_task(name):\n    tasks.append({"name": name, "done": False})\n    return tasks\n\nprint(add_task("Write the first task"))' }
   ];
+  // Permanent live projects: re-inserted on every load on every device, and always loaded from the live URL,
+  // so any update you push to GitHub Pages shows up everywhere without touching this file.
+  var LIVE = [
+    { id:'omnimathsolver', name:'omnimathsolver', language:'HTML', pinned:true, live:true,
+      description:'Math solver that always runs the latest deployed version.',
+      repoUrl:'https://github.com/pandey-subh-1808/omnimathsolver',
+      demoUrl:'https://pandey-subh-1808.github.io/omnimathsolver/math%20solver%20html.html',
+      code:'Loading the latest code from GitHub Pages...' }
+  ];
   var LC = { HTML:'#ff7a45', JavaScript:'#f7c948', Python:'#4a90e2', Other:'#9a9ab0' };
   var WORDS = ['games.', 'tools.', 'servers.', 'ideas.'];
 
@@ -295,11 +304,15 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
   var $ = function (id) { return document.getElementById(id); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
+  function ensureLive() {
+    var ids = LIVE.map(function (p) { return p.id; });
+    items = LIVE.map(clone).concat(items.filter(function (p) { return ids.indexOf(p.id) < 0; }));
+  }
+  function save() { ensureLive(); try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
   function load() {
     try {
       var raw = localStorage.getItem(KEY);
-      if (raw) { var p = JSON.parse(raw); if (Array.isArray(p) && p.length) { items = p; return; } }
+      if (raw) { var p = JSON.parse(raw); if (Array.isArray(p) && p.length) { items = p; ensureLive(); return; } }
     } catch (e) {}
     items = clone(STARTER); save();
   }
@@ -309,7 +322,7 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
       id: String(p.id || ('p-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6))),
       name: String(p.name || 'untitled'), language: String(p.language || 'Other'),
       description: String(p.description || ''), repoUrl: safeUrl(p.repoUrl),
-      demoUrl: safeUrl(p.demoUrl || p.htmlUrl), pinned: !!p.pinned, code: String(p.code || '')
+      demoUrl: safeUrl(p.demoUrl || p.htmlUrl), pinned: !!p.pinned, live: !!p.live, code: String(p.code || '')
     };
   }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
@@ -447,8 +460,13 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
       else if (act === 'view' && p) {
         viewCode = p.code; $('vTitle').textContent = p.name;
         $('vSub').textContent = p.language + ' · ' + p.description; $('vCode').textContent = p.code; open('viewer');
+        if (p.live && p.demoUrl) {
+          fetch(p.demoUrl, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.text(); })
+            .then(function (t) { viewCode = t; $('vCode').textContent = t; })
+            .catch(function () { $('vCode').textContent = 'Could not load the live code. Check your connection or open the GitHub repo.'; });
+        }
       } else if (act === 'preview' && p) {
-        $('pTitle').textContent = p.name; $('pOpen').href = p.demoUrl; $('pFrame').src = p.demoUrl; open('preview');
+        $('pTitle').textContent = p.name; $('pOpen').href = p.demoUrl; $('pFrame').src = p.live ? p.demoUrl + (p.demoUrl.indexOf('?') < 0 ? '?' : '&') + 'v=' + Date.now() : p.demoUrl; open('preview');
       } else if (act === 'copy') {
         (navigator.clipboard ? navigator.clipboard.writeText(viewCode) : Promise.reject())
           .then(function () { toast('Code copied'); }, function () { toast('Copy failed. Select the code manually.'); });
