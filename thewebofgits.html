@@ -64,11 +64,11 @@ kbd{font:600 12px "Instrument Sans";border:1px solid var(--line);border-bottom-w
 .chip:hover{color:var(--ink);border-color:var(--muted)}
 .chip[aria-pressed=true]{background:linear-gradient(100deg,var(--a1),var(--a2));border-color:transparent;color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}
+.reveal{opacity:1;transform:none;transition:none}
 .reveal.in{opacity:1;transform:none}
 
 /* cards */
-.card{--lc:var(--a1);position:relative;height:100%;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;overflow:hidden;backdrop-filter:blur(10px);transition:transform .15s ease-out,border-color .2s;transform-style:preserve-3d;will-change:transform}
+.card{--lc:var(--a1);position:relative;height:100%;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;overflow:hidden;backdrop-filter:blur(10px);transition:border-color .2s}
 .card::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0),color-mix(in srgb,var(--lc) 26%,transparent),transparent 70%);opacity:0;transition:opacity .2s;pointer-events:none}
 .card:hover{border-color:color-mix(in srgb,var(--lc) 55%,var(--line))}.card:hover::before{opacity:1}
 .card::after{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--lc);opacity:.9}
@@ -125,8 +125,9 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
 .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0));transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.2s;z-index:90}
 .toast.show{opacity:1;transform:translateX(-50%)}
 @media(max-width:640px){.two{grid-template-columns:1fr}.hero{padding-top:52px}.stats{gap:8px}.stat b{font-size:24px}}
-@media(hover:none){.spot{display:none}}
+@media(hover:none){.spot{display:none}.blob{animation:none;filter:blur(70px);opacity:.16}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+@media(max-width:760px){.blob{animation:none;filter:blur(70px);opacity:.16}.track{animation-duration:48s}}
 </style>
 </head>
 <body>
@@ -434,21 +435,7 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
     nodes.forEach(function (n, i) { n.style.transitionDelay = Math.min(i, 6) * 50 + 'ms'; io.observe(n); });
   }
 
-  /* spotlight + tilt */
-  var spot = $('spot');
-  document.addEventListener('pointermove', function (e) {
-    if (e.pointerType !== 'mouse') return;
-    spot.style.left = e.clientX + 'px'; spot.style.top = e.clientY + 'px';
-    var c = e.target.closest && e.target.closest('.card');
-    if (!c) return;
-    var r = c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-    c.style.setProperty('--mx', x + 'px'); c.style.setProperty('--my', y + 'px');
-    if (!reduce) c.style.transform = 'perspective(800px) rotateX(' + ((y / r.height - .5) * -6) + 'deg) rotateY(' + ((x / r.width - .5) * 6) + 'deg) translateY(-3px)';
-  });
-  document.addEventListener('pointerout', function (e) {
-    var c = e.target.closest && e.target.closest('.card');
-    if (c && !c.contains(e.relatedTarget)) c.style.transform = '';
-  });
+  /* Pointer-follow tilt removed for stable touch and mobile rendering. */
 
   /* dock highlight */
   if ('IntersectionObserver' in window) {
