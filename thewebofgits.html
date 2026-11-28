@@ -68,19 +68,32 @@ kbd{font:600 12px "Instrument Sans";border:1px solid var(--line);border-bottom-w
 .reveal{opacity:1;transform:none;transition:none}
 .reveal.in{opacity:1;transform:none}
 
-/* cards */
-.card{--lc:var(--a1);position:relative;height:100%;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;overflow:hidden;backdrop-filter:blur(10px);transition:border-color .2s}
-.card::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0),color-mix(in srgb,var(--lc) 26%,transparent),transparent 70%);opacity:0;transition:opacity .2s;pointer-events:none}
-.card:hover{border-color:color-mix(in srgb,var(--lc) 55%,var(--line))}.card:hover::before{opacity:1}
-.card::after{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--lc);opacity:.9}
-.card.feat{background:linear-gradient(160deg,color-mix(in srgb,var(--lc) 14%,var(--surface)),var(--surface))}
-.head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.card h3{font-size:20px;overflow-wrap:anywhere}
-.lang{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
-.lang i{width:9px;height:9px;border-radius:50%;background:var(--lc)}
-.star{font-size:12px;font-weight:700;color:var(--lc);margin-bottom:6px}
-.desc{margin:10px 0 18px;color:var(--muted);font-size:15px;flex:1}
-.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+/* project cards — editorial cover + high-contrast content panel */
+.card{--lc:var(--a1);position:relative;height:100%;min-height:370px;display:flex;flex-direction:column;padding:0;overflow:hidden;border:1px solid color-mix(in srgb,var(--lc) 28%,var(--line));border-radius:24px;background:linear-gradient(145deg,color-mix(in srgb,var(--lc) 12%,var(--solid)),var(--solid) 58%);box-shadow:0 16px 44px rgba(0,0,0,.16);isolation:isolate;transition:transform .28s cubic-bezier(.2,.8,.2,1),border-color .28s,box-shadow .28s}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.0;background:radial-gradient(420px circle at 80% 5%,color-mix(in srgb,var(--lc) 28%,transparent),transparent 62%);transition:opacity .3s;pointer-events:none}
+.card:hover{transform:translateY(-7px);border-color:color-mix(in srgb,var(--lc) 70%,var(--line));box-shadow:0 26px 65px rgba(0,0,0,.28)}
+.card:hover::before{opacity:1}
+.card-art{height:158px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:flex-end;padding:18px 24px;background:linear-gradient(120deg,color-mix(in srgb,var(--lc) 34%,#101827),color-mix(in srgb,var(--lc) 13%,#17172a));border-bottom:1px solid color-mix(in srgb,var(--lc) 35%,transparent)}
+.card-art::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.075) 1px,transparent 1px);background-size:24px 24px;mask-image:linear-gradient(110deg,#000,transparent 85%);opacity:.6}
+.card-art::after{content:"";position:absolute;width:220px;height:220px;right:12%;top:-125px;border:1px solid rgba(255,255,255,.22);border-radius:50%;box-shadow:0 0 0 24px rgba(255,255,255,.035),0 0 0 48px rgba(255,255,255,.025)}
+.art-top{position:absolute;z-index:2;left:18px;right:18px;top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.art-index,.art-status{font:700 10px/1 "Instrument Sans",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.82);padding:8px 10px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(5,10,22,.22);backdrop-filter:blur(8px)}
+.art-status{color:#fff;background:rgba(5,10,22,.34);letter-spacing:.1em}
+.art-symbol{position:relative;z-index:1;margin:18px 10px 0 0;color:#fff;font:800 104px/.9 Sora,sans-serif;letter-spacing:-.1em;text-shadow:0 10px 36px rgba(0,0,0,.24);transform:rotate(-8deg);opacity:.95}
+.card-body{position:relative;display:flex;flex:1;flex-direction:column;padding:22px 24px 24px}
+.card .head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.card h3{font-size:clamp(20px,2vw,25px);letter-spacing:-.045em;overflow-wrap:anywhere}
+.lang{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.lang i{width:8px;height:8px;border-radius:50%;background:var(--lc);box-shadow:0 0 0 4px color-mix(in srgb,var(--lc) 15%,transparent)}
+.star{position:absolute;top:-34px;left:24px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:color-mix(in srgb,var(--lc) 82%,#111827);padding:7px 11px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.desc{margin:12px 0 22px;color:var(--muted);font-size:15px;line-height:1.7;flex:1;max-width:58ch}
+.card .row{display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;padding-top:17px;border-top:1px solid var(--line)}
+.card .btn{padding:11px 15px;border-radius:11px;font-size:13px}
+.card .btn.solid{box-shadow:0 8px 22px color-mix(in srgb,var(--lc) 22%,transparent)}
+.card .btn:not(.solid){background:color-mix(in srgb,var(--surface) 75%,transparent)}
+.card .link{font-size:13px}
+.card.feat{background:linear-gradient(145deg,color-mix(in srgb,var(--lc) 16%,var(--solid)),var(--solid) 64%)}
+@media(max-width:640px){.card{min-height:340px;border-radius:21px}.card-art{height:132px;padding:14px 18px}.art-symbol{font-size:86px}.card-body{padding:20px}.card .row{gap:8px}.card .btn{padding:10px 12px}}
 .btn{display:inline-block;padding:9px 15px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600;line-height:1.2;cursor:pointer;transition:.15s}
 .btn:hover{border-color:var(--a1);transform:translateY(-1px)}
 .btn.solid{background:linear-gradient(100deg,var(--a1),var(--a2));border-color:transparent;color:#fff}
@@ -383,18 +396,50 @@ form textarea{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:160
   function card(p, feat) {
     var li = el('li', 'reveal'), c = el('div', 'card' + (feat ? ' feat' : ''));
     c.style.setProperty('--lc', LC[p.language] || LC.Other);
-    if (feat) c.appendChild(el('div', 'star', '★ Featured'));
+
+    var art = el('div', 'card-art');
+    var top = el('div', 'art-top');
+    var number = items.indexOf(p) + 1;
+    top.appendChild(el('span', 'art-index', 'PROJECT / ' + ('0' + number).slice(-2)));
+    top.appendChild(el('span', 'art-status', feat ? '★ FEATURED' : (p.demoUrl ? '● LIVE DEMO' : 'OPEN SOURCE')));
+    art.appendChild(top);
+
+    var glyphs = {
+      'omnimathsolver':'∑','taskflow-web':'✓','taskflow-py':'⌘','neon-run':'↗',
+      'cgpacalculator':'∑','expenses':'₹','ultimate-game-arcade':'▷','snake-server':'◉'
+    };
+    art.appendChild(el('div', 'art-symbol', glyphs[p.id] || (p.language === 'Python' ? 'Py' : '◇')));
+    c.appendChild(art);
+
+    var body = el('div', 'card-body');
+    if (feat) body.appendChild(el('div', 'star', '★ Featured project'));
     var h = el('div', 'head');
     h.appendChild(el('h3', null, p.name));
-    var l = el('span', 'lang'); l.appendChild(document.createElement('i')); l.appendChild(document.createTextNode(p.language));
-    h.appendChild(l); c.appendChild(h);
-    c.appendChild(el('p', 'desc', p.description));
+    var l = el('span', 'lang');
+    l.appendChild(document.createElement('i'));
+    l.appendChild(document.createTextNode(p.language));
+    h.appendChild(l);
+    body.appendChild(h);
+    body.appendChild(el('p', 'desc', p.description));
+
     var r = el('div', 'row');
-    if (p.demoUrl) { var pv = el('button', 'btn solid', 'Live preview'); pv.type = 'button'; pv.dataset.act = 'preview'; pv.dataset.id = p.id; r.appendChild(pv); }
-    var v = el('button', 'btn', 'View code'); v.type = 'button'; v.dataset.act = 'view'; v.dataset.id = p.id; r.appendChild(v);
-    if (p.demoUrl) { var a = el('a', 'link', 'Open ↗'); a.href = p.demoUrl; a.target = '_blank'; a.rel = 'noopener noreferrer'; r.appendChild(a); }
-    if (p.repoUrl) { var g = el('a', 'link', 'GitHub'); g.href = p.repoUrl; g.target = '_blank'; g.rel = 'noopener noreferrer'; r.appendChild(g); }
-    c.appendChild(r); li.appendChild(c);
+    if (p.demoUrl) {
+      var pv = el('button', 'btn solid', 'Live preview ↗');
+      pv.type = 'button'; pv.dataset.act = 'preview'; pv.dataset.id = p.id; r.appendChild(pv);
+    }
+    var v = el('button', 'btn', 'View code');
+    v.type = 'button'; v.dataset.act = 'view'; v.dataset.id = p.id; r.appendChild(v);
+    if (p.demoUrl) {
+      var a = el('a', 'link', 'Open ↗');
+      a.href = p.demoUrl; a.target = '_blank'; a.rel = 'noopener noreferrer'; r.appendChild(a);
+    }
+    if (p.repoUrl) {
+      var g = el('a', 'link', 'GitHub');
+      g.href = p.repoUrl; g.target = '_blank'; g.rel = 'noopener noreferrer'; r.appendChild(g);
+    }
+    body.appendChild(r);
+    c.appendChild(body);
+    li.appendChild(c);
     return li;
   }
 
