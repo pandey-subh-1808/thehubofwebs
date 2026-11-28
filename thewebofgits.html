@@ -384,7 +384,8 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);margin-top:58px;lett
   .hero .pill::after{
     content:"∫  ∇ f(x) dx";
     position:absolute;
-    left:calc(100% + 24px);
+    left:auto;
+    right:calc(12px - (100vw - 100% - 16px));
     top:50%;
     transform:translateY(-50%);
     display:block;
@@ -462,7 +463,7 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);margin-top:58px;lett
   .hero{padding-top:34px}
   .hero h1{font-size:36px;max-width:19ch}
   .hero .pill{font-size:10px;padding-left:10px;padding-right:10px}
-  .hero .pill::after{font-size:18px;left:calc(100% + 16px)}
+  .hero .pill::after{font-size:18px;left:auto;right:calc(12px - (100vw - 100% - 16px))}
   .stats{gap:6px}
   .stat{padding:10px 5px}
   .stat b{font-size:27px}
