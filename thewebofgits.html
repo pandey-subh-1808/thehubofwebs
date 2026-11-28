@@ -235,6 +235,65 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);margin-top:58px;lett
 }
 @media(prefers-reduced-motion:reduce){.hero:after{transform:translateY(-50%)}}
 
+
+/* ===== HERO REBALANCE: keep the live heading, fix oversized composition ===== */
+.hero{
+  min-height:0;
+  padding:64px 0 34px;
+  justify-content:center;
+}
+.hero:before{
+  inset:18px -18px 18px 55%;
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 72% 42%,color-mix(in srgb,var(--a2) 18%,transparent),transparent 58%),
+    linear-gradient(140deg,color-mix(in srgb,var(--a2) 13%,var(--surface)),color-mix(in srgb,var(--a1) 9%,transparent));
+}
+.hero:after{
+  right:5%;
+  top:43%;
+  font-size:clamp(42px,5.2vw,76px);
+  opacity:.82;
+}
+.hero h1{
+  max-width:13ch;
+  font-size:clamp(48px,5.1vw,76px);
+  line-height:1.06;
+  margin-top:20px;
+  text-wrap:balance;
+}
+.hero p.sub{max-width:48ch;margin-top:18px;font-size:17px}
+.search{max-width:690px;margin-top:24px}
+.stats{max-width:690px;gap:12px;margin-top:18px}
+.stat{padding:13px 15px}
+.stat b{font-size:28px}
+.dock{bottom:calc(12px + env(safe-area-inset-bottom,0))}
+@media(max-width:1100px){
+  .hero:before{left:48%;right:-10px}
+  .hero h1{max-width:12ch;font-size:clamp(46px,6vw,68px)}
+  .hero:after{font-size:clamp(36px,5.5vw,60px);right:3%}
+}
+@media(max-width:760px){
+  .hero{padding:42px 0 26px}
+  .hero:before{inset:10px -8px 8px 0;border-radius:24px;opacity:.92}
+  .hero:after{right:5%;top:62%;font-size:clamp(30px,8vw,46px);opacity:.18}
+  .hero h1{max-width:11ch;font-size:clamp(42px,9.4vw,58px);line-height:1.08}
+  .hero p.sub{max-width:39ch;font-size:15px}
+  .search{max-width:100%;margin-top:20px}
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr));max-width:100%;gap:8px;margin-top:14px}
+  .stat{padding:11px 9px}
+  .stat b{font-size:23px}
+  .stat span{font-size:11px}
+}
+@media(max-width:420px){
+  .hero h1{font-size:clamp(38px,10.2vw,46px);max-width:10ch}
+  .hero .pill{font-size:11px}
+  .stats{gap:6px}
+  .stat{padding:10px 7px}
+  .stat b{font-size:21px}
+  .stat span{font-size:10px}
+}
+
 </style>
 </head>
 <body>
