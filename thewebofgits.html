@@ -496,7 +496,7 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);margin-top:58px;lett
       <div class="stats">
         <div class="stat"><b id="sTotal">0</b><span>projects</span></div>
         <div class="stat"><b id="sLive">0</b><span>live demos</span></div>
-        <div class="stat"><b id="sLang">0</b><span>languages</span></div>
+        <div class="stat"><b id="sLang">0</b><span>technologies</span></div>
       </div>
     </section>
   </div>
@@ -651,6 +651,8 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);margin-top:58px;lett
   ];
   var LC = { HTML:'#ff7a45', JavaScript:'#f7c948', Python:'#4a90e2', Other:'#9a9ab0' };
   var WORDS = ['games.', 'tools.', 'servers.', 'ideas.'];
+  // Technologies and platforms represented across the showcased projects.
+  var tech = ['HTML', 'CSS', 'JavaScript', 'Python', 'Canvas', 'WebSockets', 'Node.js', 'GitHub Pages', 'localStorage'];
 
   var items = [], lang = 'ALL', viewCode = '', io;
   var $ = function (id) { return document.getElementById(id); };
@@ -785,10 +787,9 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);margin-top:58px;lett
 
     countTo($('sTotal'), items.length);
     countTo($('sLive'), items.filter(function (p) { return p.demoUrl; }).length);
-    countTo($('sLang'), new Set(items.map(function (p) { return p.language; })).size);
+    countTo($('sLang'), tech.length);
     $('count').textContent = list.length + (list.length === 1 ? ' project' : ' projects');
 
-    var tech = ['HTML', 'CSS', 'JavaScript', 'Python', 'Canvas', 'WebSockets', 'Node.js', 'GitHub Pages', 'localStorage'];
     $('track').innerHTML = tech.concat(tech).map(function (t) { return '<span>' + t + '</span>'; }).join('');
 
     var fg = $('featGrid'); fg.textContent = '';
